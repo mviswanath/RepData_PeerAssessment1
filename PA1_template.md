@@ -10,16 +10,14 @@ output:
 
 ### 1.1 Load the data
 
-| Ensure your session is pointing to the directory with the csv file.
-| Use read.csv command to load the data.
+Ensure your session is pointing to the directory with the csv file.Use read.csv command to load the data.
 
 ```r
 A <- read.csv("activity.csv")
 ```
 
 ### 1.2 Preprocess the data
-| Check structure of the loaded dataset with str. Review elements of the dataset using head.
-| Convert the loaded data set into a data frame. Load package for coloring the graphs.
+Check structure of the loaded dataset with str. Review elements of the dataset using head.Convert the loaded data set into a data frame. Load package for coloring the graphs. Load library for ggplot2.
 
 
 ```r
@@ -51,19 +49,12 @@ head(A)
 A <- data.frame(A)
 options(warn = -1)
 require(RColorBrewer)
-```
-
-```
-## Loading required package: RColorBrewer
-```
-
-```r
 library(ggplot2)
 ```
 ## II What is the mean total number of steps taken per day?
 
 ### 2.1 Calculate the total number of steps taken per day 
-| Use tapply to calculate the total number of steps per day. Omit missing values.
+Use tapply to calculate the total number of steps per day. Omit missing values.
 
 ```r
 AMOD <- tapply(A$steps, A$date, sum, na.rm = TRUE)
@@ -75,7 +66,7 @@ head (AMOD)
 ##          0        126      11352      12116      13294      15420
 ```
 ### 2.2 Make a histogram of the total number of steps taken each day 
-| Call hist function to make a histogram of data from previous step
+Call hist function to make a histogram of data from previous step
 
 ```r
 hist( AMOD, breaks = 10, lables = TRUE, ylim = c(0, 20), xlim = c(0, 25000), main="Histogram of # of steps per day", xlab="Number of Steps per day ", col = brewer.pal(5, "Set2"))
@@ -102,8 +93,8 @@ median(AMOD)
 ```
 ## [1] 10395
 ```
-| Mean of the total number of steps taken per day is 9354.23
-| Median of the total number of steps taken per day is 10395
+Mean of the total number of steps taken per day is 9354.23
+Median of the total number of steps taken per day is 10395
 
 ## III What is the average daily activity pattern?
 ### 3.1 Make a time series plot of the 5-minute interval and the average number of steps taken
@@ -118,8 +109,9 @@ plot(BMODName, BMOD, type = "l", , main = "Avg steps across 5-minute intervals",
 ![plot of chunk 3.1-Average Daily Activity Pattern](figure/3.1-Average Daily Activity Pattern-1.png) 
 
 ### 3.2 Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
-| On average the maximum number of steps is 206. 
-| The five minute interval number that contains the maximum number of steps is 104 th of the 288 total intervals. The interval is:
+On average the maximum number of steps is 206. 
+
+The five minute interval number that contains the maximum number of steps is 104 th of the 288 total intervals. The interval is:
 
 ```r
 names(BMOD)[which(grepl(max(BMOD), BMOD))]
@@ -130,7 +122,7 @@ names(BMOD)[which(grepl(max(BMOD), BMOD))]
 ```
 ## IV Imputing missing values
 ### 4.1 Calculate and report the total number of missing values in the dataset 
-| The total number of missing values is NA's   :2304  .
+The total number of missing values is NA's   :2304  .
 
 ```r
 summary(A)
@@ -147,7 +139,7 @@ summary(A)
 ##  NA's   :2304     (Other)   :15840
 ```
 ### 4.2 Devise a strategy for filling in all of the missing values in the dataset.
-| Relplace missing value by mean of the number of steps in a given interval
+Relplace missing value by mean of the number of steps in a given interval
 
 
 ```r
@@ -155,8 +147,7 @@ L <- BMOD[match(A$interval, names(BMOD))]
 I.steps <- ifelse(is.na(A$steps), L, A$steps)
 ```
 ### 4.3 Create a new dataset that is equal to the original dataset but with the missing data filled in.
-| Creating a new dataset by replacing the steps column by Imputed steps column in A
-| Text 2
+Creating a new dataset by replacing the steps column by Imputed steps column in A. 
 
 
 ```r
@@ -173,7 +164,7 @@ str(NEWA)
 ##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
 ```
 ### 4.4 (a) Make a histogram of the total number of steps taken each day
-| Use tapply to generate the column of data with total number of steps by day. Use hist to plot the histogram.
+Use tapply to generate the column of data with total number of steps by day. Use hist to plot the histogram.
 
 
 ```r
@@ -200,15 +191,17 @@ median(IAMOD)
 ```
 ## [1] 10766.19
 ```
-| Mean of the total number of imputed steps taken per day is 1.076619 &times; 10<sup>4</sup>
-| Median of the total number of imputed steps taken per day is 1.0766189 &times; 10<sup>4</sup>
-|
-| The difference between the means (total steps, total imputed steps) is -1411.96
-| The difference between the medians (total steps, total imputed steps) is -371.1886792
+Mean of the total number of imputed steps taken per day is 1.076619 &times; 10<sup>4</sup>
+
+Median of the total number of imputed steps taken per day is 1.0766189 &times; 10<sup>4</sup>
+
+The difference between the means (total steps, total imputed steps) is -1411.96
+
+The difference between the medians (total steps, total imputed steps) is -371.1886792. The mean and median increase after imputation.
 
 ## V Weekdays and weekends activity patterns
 ### 5.1 Create a new factor variable for weekdays and weekends
-| Use ifelse function to compute a vector of weekday/weekend. Column bind this vector to NEWA dataset.
+Use ifelse function to compute a vector of weekday/weekend. Column bind this vector to NEWA dataset.
 
 ```r
 day <- weekdays(as.Date(NEWA$date))

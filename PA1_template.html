@@ -205,16 +205,14 @@ hr {
 
 <h3>1.1 Load the data</h3>
 
-<p>| Ensure your session is pointing to the directory with the csv file.
-| Use read.csv command to load the data.</p>
+<p>Ensure your session is pointing to the directory with the csv file.Use read.csv command to load the data.</p>
 
 <pre><code class="r">A &lt;- read.csv(&quot;activity.csv&quot;)
 </code></pre>
 
 <h3>1.2 Preprocess the data</h3>
 
-<p>| Check structure of the loaded dataset with str. Review elements of the dataset using head.
-| Convert the loaded data set into a data frame. Load package for coloring the graphs.</p>
+<p>Check structure of the loaded dataset with str. Review elements of the dataset using head.Convert the loaded data set into a data frame. Load package for coloring the graphs. Load library for ggplot2.</p>
 
 <pre><code class="r">str (A)
 </code></pre>
@@ -240,19 +238,14 @@ hr {
 <pre><code class="r">A &lt;- data.frame(A)
 options(warn = -1)
 require(RColorBrewer)
-</code></pre>
-
-<pre><code>## Loading required package: RColorBrewer
-</code></pre>
-
-<pre><code class="r">library(ggplot2)
+library(ggplot2)
 </code></pre>
 
 <h2>II What is the mean total number of steps taken per day?</h2>
 
 <h3>2.1 Calculate the total number of steps taken per day</h3>
 
-<p>| Use tapply to calculate the total number of steps per day. Omit missing values.</p>
+<p>Use tapply to calculate the total number of steps per day. Omit missing values.</p>
 
 <pre><code class="r">AMOD &lt;- tapply(A$steps, A$date, sum, na.rm = TRUE)
 head (AMOD)
@@ -264,7 +257,7 @@ head (AMOD)
 
 <h3>2.2 Make a histogram of the total number of steps taken each day</h3>
 
-<p>| Call hist function to make a histogram of data from previous step</p>
+<p>Call hist function to make a histogram of data from previous step</p>
 
 <pre><code class="r">hist( AMOD, breaks = 10, lables = TRUE, ylim = c(0, 20), xlim = c(0, 25000), main=&quot;Histogram of # of steps per day&quot;, xlab=&quot;Number of Steps per day &quot;, col = brewer.pal(5, &quot;Set2&quot;))
 </code></pre>
@@ -285,8 +278,8 @@ head (AMOD)
 <pre><code>## [1] 10395
 </code></pre>
 
-<p>| Mean of the total number of steps taken per day is 9354.23
-| Median of the total number of steps taken per day is 10395</p>
+<p>Mean of the total number of steps taken per day is 9354.23
+Median of the total number of steps taken per day is 10395</p>
 
 <h2>III What is the average daily activity pattern?</h2>
 
@@ -301,8 +294,9 @@ plot(BMODName, BMOD, type = &quot;l&quot;, , main = &quot;Avg steps across 5-min
 
 <h3>3.2 Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?</h3>
 
-<p>| On average the maximum number of steps is 206. 
-| The five minute interval number that contains the maximum number of steps is 104 th of the 288 total intervals. The interval is:</p>
+<p>On average the maximum number of steps is 206. </p>
+
+<p>The five minute interval number that contains the maximum number of steps is 104 th of the 288 total intervals. The interval is:</p>
 
 <pre><code class="r">names(BMOD)[which(grepl(max(BMOD), BMOD))]
 </code></pre>
@@ -314,7 +308,7 @@ plot(BMODName, BMOD, type = &quot;l&quot;, , main = &quot;Avg steps across 5-min
 
 <h3>4.1 Calculate and report the total number of missing values in the dataset</h3>
 
-<p>| The total number of missing values is NA&#39;s   :2304  .</p>
+<p>The total number of missing values is NA&#39;s   :2304  .</p>
 
 <pre><code class="r">summary(A)
 </code></pre>
@@ -331,7 +325,7 @@ plot(BMODName, BMOD, type = &quot;l&quot;, , main = &quot;Avg steps across 5-min
 
 <h3>4.2 Devise a strategy for filling in all of the missing values in the dataset.</h3>
 
-<p>| Relplace missing value by mean of the number of steps in a given interval</p>
+<p>Relplace missing value by mean of the number of steps in a given interval</p>
 
 <pre><code class="r">L &lt;- BMOD[match(A$interval, names(BMOD))]
 I.steps &lt;- ifelse(is.na(A$steps), L, A$steps)
@@ -339,8 +333,7 @@ I.steps &lt;- ifelse(is.na(A$steps), L, A$steps)
 
 <h3>4.3 Create a new dataset that is equal to the original dataset but with the missing data filled in.</h3>
 
-<p>| Creating a new dataset by replacing the steps column by Imputed steps column in A
-| Text 2</p>
+<p>Creating a new dataset by replacing the steps column by Imputed steps column in A. </p>
 
 <pre><code class="r">NEWA &lt;- A
 NEWA$steps &lt;- I.steps
@@ -356,7 +349,7 @@ str(NEWA)
 
 <h3>4.4 (a) Make a histogram of the total number of steps taken each day</h3>
 
-<p>| Use tapply to generate the column of data with total number of steps by day. Use hist to plot the histogram.</p>
+<p>Use tapply to generate the column of data with total number of steps by day. Use hist to plot the histogram.</p>
 
 <pre><code class="r">IAMOD &lt;- tapply(NEWA$I.steps, NEWA$date, sum)
 hist( IAMOD, breaks = 10, labels = TRUE, ylim = c(0, 20), xlim = c(0, 25000), main=&quot;Histogram of # of steps per day&quot;, xlab=&quot;Number of Steps per day &quot;, col = brewer.pal(5, &quot;Set2&quot;))
@@ -378,17 +371,19 @@ hist( IAMOD, breaks = 10, labels = TRUE, ylim = c(0, 20), xlim = c(0, 25000), ma
 <pre><code>## [1] 10766.19
 </code></pre>
 
-<p>| Mean of the total number of imputed steps taken per day is 1.076619 &times; 10<sup>4</sup>
-| Median of the total number of imputed steps taken per day is 1.0766189 &times; 10<sup>4</sup>
-|
-| The difference between the means (total steps, total imputed steps) is -1411.96
-| The difference between the medians (total steps, total imputed steps) is -371.1886792</p>
+<p>Mean of the total number of imputed steps taken per day is 1.076619 &times; 10<sup>4</sup></p>
+
+<p>Median of the total number of imputed steps taken per day is 1.0766189 &times; 10<sup>4</sup></p>
+
+<p>The difference between the means (total steps, total imputed steps) is -1411.96</p>
+
+<p>The difference between the medians (total steps, total imputed steps) is -371.1886792. The mean and median increase after imputation.</p>
 
 <h2>V Weekdays and weekends activity patterns</h2>
 
 <h3>5.1 Create a new factor variable for weekdays and weekends</h3>
 
-<p>| Use ifelse function to compute a vector of weekday/weekend. Column bind this vector to NEWA dataset.</p>
+<p>Use ifelse function to compute a vector of weekday/weekend. Column bind this vector to NEWA dataset.</p>
 
 <pre><code class="r">day &lt;- weekdays(as.Date(NEWA$date))
 type &lt;- ifelse(day %in% c(&quot;Saturday&quot;, &quot;Sunday&quot;), &quot;weekend&quot;, &quot;weekday&quot;)
